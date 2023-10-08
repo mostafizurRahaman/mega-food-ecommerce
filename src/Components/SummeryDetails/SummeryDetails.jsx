@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { SlArrowRight } from "react-icons/sl";
 
 const SummeryDetails = ({ groupName, children, icon }) => {
    const [open, setOpen] = useState(false);
@@ -16,11 +18,12 @@ const SummeryDetails = ({ groupName, children, icon }) => {
                <span className="text-sm w-4  h-4">{icon}</span>
                <span className="text-[13px]">{groupName}</span>
             </div>
-            <BiSolidDownArrow
+            <RiArrowRightSLine
                className={`${
-                  !open ? " rotate-90  " : "rotate-0 text-green-600"
+                  !open ? "   rotate-0 font-bold" : "rotate-90 text-green-600"
                } duration-1000 transition-transform text-xs`}
-            ></BiSolidDownArrow>
+               size={20}
+            ></RiArrowRightSLine>
          </summary>
 
          <ul className={`flex pl-1 flex-col gap-1 text-white py-1`}>
