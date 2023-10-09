@@ -9,7 +9,7 @@ const SummeryDetails = ({ groupName, children, icon }) => {
    const [open, setOpen] = useState(false);
 
    return (
-      <details className={`border-t border-white  text-white text-sm py-2 `}>
+      <details className={`border-t border-white  text-accent  text-sm py-2 `}>
          <summary
             className="text-sm flex justify-between items-center"
             onClick={() => setOpen(!open)}
@@ -20,7 +20,7 @@ const SummeryDetails = ({ groupName, children, icon }) => {
             </div>
             <RiArrowRightSLine
                className={`${
-                  !open ? "   rotate-0 font-bold" : "rotate-90 text-green-600"
+                  !open ? "   rotate-0 font-bold" : "rotate-90 text-black-600"
                } duration-1000 transition-transform text-xs`}
                size={20}
             ></RiArrowRightSLine>
