@@ -1,17 +1,17 @@
 import LinkNav from "../LinkNav";
 import SummeryDetails from "../SummeryDetails/SummeryDetails";
-import ProfileInfo from "../ProfileInfo";
 import { GiFruitBowl, GiVacuumCleaner } from "react-icons/gi";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillHome } from "react-icons/ai";
 import { FaMosquito, FaToolbox } from "react-icons/fa6";
 import { BiSolidOffer } from "react-icons/bi";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { IoIosFlash } from "react-icons/io";
+import foodCategories from "../../Configs/demodata";
 const Siderbar = () => {
    return (
-      <div className=" w-full pb-3  ">
+      <div className=" w-full   ">
          {/* <ProfileInfo></ProfileInfo> */}
-         <div className="px-2 mt-5 capitalize  ">
+         <div className="px-2 my-5 mb-20 capitalize  ">
             <div className="flex  flex-col gap-2 mb-2">
                <LinkNav
                   path="/favourites"
@@ -68,69 +68,16 @@ const Siderbar = () => {
             </div>
             <SummeryDetails
                groupName="food"
+               path="/food"
                icon={<GiFruitBowl size={16}></GiFruitBowl>}
             >
-               <LinkNav
-                  path="/fruits-vegetables"
-                  title="fruits & vegetables"
+              {
+               foodCategories.map((i,idx)=><LinkNav key={idx}
+                  path={i.path}
+                  title={i.title}
                   style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/meat-fish"
-                  title="meat & fish"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/cooking"
-                  title="cooking"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/sauces-pickles"
-                  title="sauces & pickles"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/dairy"
-                  title="dairy & eggs"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/breakfast"
-                  title="breakfast"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/candy-chocolate"
-                  title="candy & chocolate"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav path="/snacks" title="snacks" style="text-sm"></LinkNav>
-               <LinkNav
-                  path="/beverages"
-                  title="beverages"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/baking-needs"
-                  title="baking needs"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/baking-needs"
-                  title="baking needs"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/frozen-foods"
-                  title="frozen & foods"
-                  style="text-sm"
-               ></LinkNav>
-               <LinkNav
-                  path="/diabetic-food"
-                  title="diabetic food"
-                  style="text-sm"
-               ></LinkNav>
+               ></LinkNav> )
+              }
             </SummeryDetails>
             <SummeryDetails
                groupName="cleaning supplies"
@@ -330,6 +277,91 @@ const Siderbar = () => {
                <LinkNav
                   path="/feeders"
                   title="feeders"
+                  style="text-sm"
+               ></LinkNav>
+            </SummeryDetails>
+            <SummeryDetails
+               groupName="home kitchen"
+               icon={<AiFillHome size={16}></AiFillHome>}
+            >
+               <LinkNav
+                  path="/kitchen-accessories"
+                  title="kitchen accessories"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/kitchen-appliances"
+                  title="kitchen appliances"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/lights-electrical"
+                  title="lights electrical"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/tools-hardware"
+                  title="tools hardware"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/baskets-buckets"
+                  title="baskets buckets"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/box-container"
+                  title="box container"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/gardening"
+                  title="gardening"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/rack-organizer"
+                  title="rack organizer"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/disposables"
+                  title="disposables"
+                  style="text-sm"
+               ></LinkNav>
+            </SummeryDetails>
+            <SummeryDetails
+               groupName="stationery office"
+               icon={<AiFillHome size={16}></AiFillHome>}
+            >
+               <LinkNav
+                  path="/office-electronics"
+                  title="office electronics"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/organizers"
+                  title="organizers"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/writing"
+                  title="writing and Printing"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/paper-supplies"
+                  title="paper supplies"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/school-supplies"
+                  title="school supplies"
+                  style="text-sm"
+               ></LinkNav>
+               <LinkNav
+                  path="/arts-crafts"
+                  title="arts crafts "
                   style="text-sm"
                ></LinkNav>
             </SummeryDetails>
