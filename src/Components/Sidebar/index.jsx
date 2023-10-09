@@ -71,13 +71,14 @@ const Siderbar = () => {
                path="/food"
                icon={<GiFruitBowl size={16}></GiFruitBowl>}
             >
-              {
-               foodCategories.map((i,idx)=><LinkNav key={idx}
-                  path={i.path}
-                  title={i.title}
-                  style="text-sm"
-               ></LinkNav> )
-              }
+               {foodCategories.map((i, idx) => (
+                  <LinkNav
+                     key={idx}
+                     path={`/food${i.path}`}
+                     title={i.title}
+                     style="text-sm"
+                  ></LinkNav>
+               ))}
             </SummeryDetails>
             <SummeryDetails
                groupName="cleaning supplies"
