@@ -20,8 +20,8 @@ const ProductCard = () => {
                   </small>
                </h3>
             </div>
-            <div className="hidden group-hover:block ">
-               <div className="flex  w-full h-full bg-black top-0 left-0 absolute  items-center justify-center rounded-md bg-opacity-[60%] capitalize ">
+            <div className="hidden group-hover:block  w-full h-full  ">
+               <div className="flex  w-full h-full top-0 left-0 absolute  items-center justify-center rounded-md  capitalize bg-black bg-opacity-[60%] ">
                   <div className="flex items-center justify-center gap-2">
                      <FaPlus
                         className="text-secondary hover:text-red-500 cursor-pointer "
@@ -33,6 +33,9 @@ const ProductCard = () => {
                         size={20}
                      ></FaMinus>
                   </div>
+                  <button className="absolute bottom-1 -translate-x-1/2 left-1/2 text-sm z-999 px-5 py-2 w-[96%] rounded-md bg-secondary text-black">
+                     show details
+                  </button>
                </div>
             </div>
          </div>
