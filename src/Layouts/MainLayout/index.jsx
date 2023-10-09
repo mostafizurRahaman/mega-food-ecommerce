@@ -9,7 +9,7 @@ const MainLayout = () => {
          <Navbar2 setIsOpen={setIsOpen}></Navbar2>
          <div className={` flex items-start  relative  `}>
             <div
-               className={`min-w-[230px] duration-300 overflow-y-scroll bg-secondary shadow-[5px_5px_5px_#ddd]   p-3 min-h-screen  max-h-screen top-16  absolute  left-0   ${
+               className={`min-w-[230px] duration-300 overflow-y-scroll bg-secondary shadow-[5px_5px_5px_#ddd]  z-[99]  p-3 min-h-screen  max-h-screen top-16  absolute  left-0   ${
                   !isOpen
                      ? "md:absolute top-20   transition-all left-[-999px]"
                      : "md:fixed "

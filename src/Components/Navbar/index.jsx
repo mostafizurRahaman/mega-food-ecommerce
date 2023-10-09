@@ -23,7 +23,9 @@ const Navbar2 = ({ setIsOpen }) => {
                >
                   <FaBarsStaggered size={24}></FaBarsStaggered>
                </div>
-               <h2>Mega Food</h2>
+               <Link to="/">
+                  <h2>Mega Food</h2>
+               </Link>
             </div>
          </div>
          <div className=" order-3 w-full md:order-2  md:w-[50%] lg:[60%] rounded-md relative  ">

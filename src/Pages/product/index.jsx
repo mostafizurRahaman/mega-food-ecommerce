@@ -16,10 +16,10 @@ const ProductPage = () => {
                   .slice(1, location.pathname.length)
                   .split("/")
                   .join(" >> ")
-                  .toUpperCase()} 
+                  .toUpperCase()}
             </span>
          </h3>
-         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
+         <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-3 ">
             <ProductCard></ProductCard>
             <ProductCard></ProductCard>
             <ProductCard></ProductCard>
