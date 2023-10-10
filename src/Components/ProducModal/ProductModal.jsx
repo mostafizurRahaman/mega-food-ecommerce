@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import { HiPlus } from "react-icons/hi";
 import AddToCartButton from "../Buttons/AddToCartButton";
 import { AiFillCloseCircle } from "react-icons/ai";
