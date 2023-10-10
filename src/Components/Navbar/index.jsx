@@ -43,8 +43,11 @@ const Navbar2 = ({ setIsOpen }) => {
          <div className=" w-1/2 md:w-auto md:order-3 flex items-center justify-end gap-5 text-secondary font-bold">
             <RiNotification3Line size={25}></RiNotification3Line>
 
-            <Link to="/cart">
+            <Link to="/cart" className="relative">
                <TbShoppingCart size={26}></TbShoppingCart>
+               <span className="absolute -top-1 -right-2  bg-red-500 text-secondary w-5  h-5 rounded-full flex  items-center justify-center text-xs ">
+                  20
+               </span>
             </Link>
             <Link to="/login">
                <FaRegUser size={24}></FaRegUser>
