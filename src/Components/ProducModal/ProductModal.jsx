@@ -3,6 +3,8 @@ import { HiPlus } from "react-icons/hi";
 import AddToCartButton from "../Buttons/AddToCartButton";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiMinus } from "react-icons/bi";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import InnerImageZoom from "react-inner-image-zoom";
 const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
    return (
       <div className=" fixed z-[999] top-0 left-0  w-full min-h-screen md:h-screen bg-primary bg-opacity-50 flex items-center justify-center">
@@ -16,12 +18,12 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                   className="text-2xl  rounded-full "
                ></AiFillCloseCircle>
             </div>
-            <div className="flex flex-col md:flex-row  w-full">
+            <div className="flex flex-col gap-5 md:flex-row  w-full">
                <div className=" md:w-[40%] flex items-center justify-center gap-5">
-                  <img
+                  <InnerImageZoom
+                     className="object-contain"
                      src={product.productImage}
-                     className="object-contain w-[60%] md:w-[80%]"
-                     alt=""
+                     zoomScale={2}
                   />
                </div>
                <div className=" md:w-[60%] flex-grow">
