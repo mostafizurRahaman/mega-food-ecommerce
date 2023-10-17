@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { FaMinus, FaPlus } from "react-icons/fa6";
 import ProductModal from "../ProducModal/ProductModal";
 import { useState } from "react";
 import { BiMinus } from "react-icons/bi";
@@ -8,25 +7,37 @@ import { HiPlus } from "react-icons/hi";
 const ProductCard = ({ product }) => {
    const [productModal, setProductModal] = useState(false);
    const [quantity, setQuantity] = useState(0);
+   const user = { role: "user" };
    return (
       <>
          <div className="bg-white hover:shadow-[5px_5px_5px_5px_#ddd] p-2 rounded-md">
             <div className="relative p-2  group mb-2 duration-300 transition-all ease-in-out">
                <div>
                   <img
-                     src={product?.productImage}
-                     className="w-full h-full"
+                     src={product?.thumbnail}
+                     className=" w-[85%] md:w-full md:h-[180px]  h-[150px] object-cover"
                      alt=""
                   />
                </div>
                <div className="flex items-center justify-center flex-col">
-                  <p className="text-sm">500gm</p>
+                  <p className="text-sm">
+                     {product.quantity} {product.unit}
+                  </p>
                   <h3 className="text-xl">
                      <span className="font-bold mr-2  text-red-500">
-                        ${product?.price}
-                     </span>{" "}
+                        $
+                        {user?.role === "dealer"
+                           ? product?.dealerPrice
+                           : product?.price}
+                     </span>
                      <small>
-                        <del>${product?.regularPrice}</del>
+                        <del>
+                           $
+                           {product.price -
+                              parseFloat(
+                                 (product?.price * product.discount) / 100
+                              )}
+                        </del>
                      </small>
                   </h3>
                </div>

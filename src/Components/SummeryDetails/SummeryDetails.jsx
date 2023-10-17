@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 
 import { useState } from "react";
-import { BiSolidDownArrow } from "react-icons/bi";
 import { RiArrowRightSLine } from "react-icons/ri";
-import { SlArrowRight } from "react-icons/sl";
+
 import { useNavigate } from "react-router-dom";
 
 const SummeryDetails = ({ groupName, children, icon, path }) => {
@@ -20,7 +19,9 @@ const SummeryDetails = ({ groupName, children, icon, path }) => {
             }}
          >
             <div className="flex items-center gap-2">
-               <span className="text-sm w-4  h-4">{icon}</span>
+               <span className="text-sm w-4  h-4">
+                  <img className="w-5 h-auto" src={icon}></img>
+               </span>
                <span className="text-[13px]">{groupName}</span>
             </div>
             <RiArrowRightSLine

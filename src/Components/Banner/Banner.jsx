@@ -16,15 +16,14 @@ const Banner = () => {
    };
 
    const styles = {
-      backgroundPosition: "center bottom",
-      background: `linear-gradient(90deg,rgba(48, 97, 221, 0),rgba(48, 97, 221, 0)), url(${banner.banner}) no-repeat`,
+      background: `linear-gradient(90deg, rgba(48, 97, 221, 0),rgba(48, 97, 221, 0)), url(${banner.banner}) no-repeat`,
       backgroundSize: "cover",
-      objectPosition: "center bottom",
+      backgroundPosition: "center bottom",
    };
 
    return (
       <div
-         className=" p-10 h-[75vh]   w-full flex items-center justify-start  md:object-cover  "
+         className=" p-10 h-[75vh]   w-full flex items-center justify-start   "
          style={styles}
       >
          <div className=" lg:w-2/5 flex gap-3 flex-col p-3 bg-opacity-75 rounded-md bg-white  md:bg-transparent">

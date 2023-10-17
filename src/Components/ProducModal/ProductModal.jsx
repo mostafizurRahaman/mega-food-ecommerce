@@ -22,7 +22,7 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                <div className=" md:w-[40%] flex items-center justify-center gap-5">
                   <InnerImageZoom
                      className="object-contain"
-                     src={product.productImage}
+                     src={product.thumbnail}
                      zoomScale={2}
                   />
                </div>
@@ -45,7 +45,11 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                   <h3 className="text-3xl font-bold ">
                      <span className="text-red-500">${product.price}</span>{" "}
                      <small className="text-[24px]">
-                        <del>${product.regularPrice}</del>
+                        <del>
+                           $
+                           {product.price -
+                              (product.price * product.discount) / 100}
+                        </del>
                      </small>
                   </h3>
                   <div className="flex items-center  gap-5 justify-between my-3">

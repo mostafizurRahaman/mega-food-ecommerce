@@ -11,7 +11,11 @@ const LinkNav = ({ path, title, icon, style }) => {
                ? "text-green-400 flex items-center  justify-start  rounded-md"
                : " flex items-center  space-x-3 rounded-md text-accent "} `}
       >
-         {icon ? icon : <TbArrowBadgeRightFilled />}
+         {icon ? (
+            <img src={icon} className="w-5 h-auto" />
+         ) : (
+            <TbArrowBadgeRightFilled />
+         )}
          <span className={`${style ? style : "text-xs"}`}>{title}</span>
       </NavLink>
    );
