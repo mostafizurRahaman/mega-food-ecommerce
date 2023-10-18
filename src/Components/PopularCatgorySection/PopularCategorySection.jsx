@@ -15,7 +15,7 @@ const PopularCategorySection = () => {
    console.log(subCategories);
 
    return (
-      <div className="py-10">
+      <div className="">
          <h1 className="text-3xl font-semibold text-black uppercase text-center ">
             Popular Categories
          </h1>

@@ -18,10 +18,10 @@ const MainLayout = () => {
                <Siderbar></Siderbar>
             </div>
             {isOpen && (
-               <div className="hidden md:block  md:min-w-[230px]"></div>
+               <div className="hidden md:block  md:min-w-[230px] duration-500 transition-all"></div>
             )}
-            <div className="w-full py-5 mt-10 ">
-               <div className="h-screen">
+            <div className={`w-full py-20  ${isOpen && "md:calc-width"}`}>
+               <div className="h-screen ">
                   <Outlet></Outlet>
                </div>
             </div>
