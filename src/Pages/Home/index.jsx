@@ -1,6 +1,7 @@
 import FeatureSection from "../../Components/FeaturesSection/FeatureSection";
 import PopularCategorySection from "../../Components/PopularCatgorySection/PopularCategorySection";
 import BannerSection from "../../Components/BannerSection/BannerSection";
+import GetMoreSection from "../../Components/GetMoreSection/GetMoreSection";
 
 const Home = () => {
    return (
@@ -10,6 +11,7 @@ const Home = () => {
          </div>
          <FeatureSection></FeatureSection>
          <PopularCategorySection></PopularCategorySection>
+         <GetMoreSection></GetMoreSection>
       </div>
    );
 };

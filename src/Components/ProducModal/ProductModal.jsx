@@ -6,6 +6,9 @@ import { BiMinus } from "react-icons/bi";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import InnerImageZoom from "react-inner-image-zoom";
 const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
+   const user = {
+      role: "user",
+   };
    return (
       <div className=" fixed z-[999] top-0 left-0  w-full min-h-screen md:h-screen bg-primary bg-opacity-50 flex items-center justify-center">
          <div className=" overflow-y-scroll md:overflow-auto max-h-[90vh] md:max-h-auto md:mt-0 w-[95%] md:w-[70%] lg:w-[55%]  xl:w-[60%] bg-secondary px-5  py-5 flex rounded-lg relative">
@@ -43,13 +46,19 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                      and kohlrabi.
                   </p>
                   <h3 className="text-3xl font-bold ">
-                     <span className="text-red-500">${product.price}</span>{" "}
+                     <span className="text-red-500">
+                        ${" "}
+                        {user?.role === "dealer" ? (
+                           product.dealerPrice
+                        ) : (
+                           <>
+                              {product.price -
+                                 (product.price * product.discount) / 100}
+                           </>
+                        )}
+                     </span>
                      <small className="text-[24px]">
-                        <del>
-                           $
-                           {product.price -
-                              (product.price * product.discount) / 100}
-                        </del>
+                        <del>${product.price}</del>
                      </small>
                   </h3>
                   <div className="flex items-center  gap-5 justify-between my-3">

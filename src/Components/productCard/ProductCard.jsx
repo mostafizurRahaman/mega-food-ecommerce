@@ -26,18 +26,19 @@ const ProductCard = ({ product }) => {
                   <h3 className="text-xl">
                      <span className="font-bold mr-2  text-red-500">
                         $
-                        {user?.role === "dealer"
-                           ? product?.dealerPrice
-                           : product?.price}
+                        {user?.role === "dealer" ? (
+                           product?.dealerPrice
+                        ) : (
+                           <>
+                              {product.price -
+                                 parseFloat(
+                                    (product?.price * product.discount) / 100
+                                 )}
+                           </>
+                        )}
                      </span>
                      <small>
-                        <del>
-                           $
-                           {product.price -
-                              parseFloat(
-                                 (product?.price * product.discount) / 100
-                              )}
-                        </del>
+                        <del>${product.price}</del>
                      </small>
                   </h3>
                </div>
