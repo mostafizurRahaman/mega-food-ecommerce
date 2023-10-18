@@ -48,7 +48,7 @@ const Banner = ({ banner }) => {
 
    return (
       <div
-         className="  p-10   flex items-center justify-start   "
+         className="  py-14 px-10  flex items-center justify-start   "
          style={styles}
       >
          <div className=" lg:w-2/5 flex gap-3 flex-col p-3 bg-opacity-75 rounded-md bg-white  ">
