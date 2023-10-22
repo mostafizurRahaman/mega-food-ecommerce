@@ -50,7 +50,7 @@ const Siderbar = () => {
                <SummeryDetails
                   key={i._id}
                   groupName={i.name}
-                  path={`/category/${i._id}`}
+                  path={`/category${i.path}`}
                   icon={i.logo}
                >
                   {i?.subCategories?.map((sub) => (
@@ -58,7 +58,7 @@ const Siderbar = () => {
                         key={sub._id}
                         title={sub.name}
                         icon={i.logo}
-                        path={`/category/${i._id}/${sub._id}`}
+                        path={`/category${i.path}${sub.path}`}
                      ></LinkNav>
                   ))}
                </SummeryDetails>

@@ -5,7 +5,13 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { BiMinus } from "react-icons/bi";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import InnerImageZoom from "react-inner-image-zoom";
-const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
+const ProductModal = ({
+   product,
+   setModalShow,
+   quantity,
+   setQuantity,
+   addToCart,
+}) => {
    const user = {
       role: "user",
    };
@@ -35,7 +41,7 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                   </h2>
                   <p className="px-2 my-1 py-[1px] rounded-full inline-block bg-primary bg-opacity-75 text-primary text-sm  capitalize font-medium ">
                      <span className="text-white ml-1">stock : </span>
-                     <span className="text-red-500">{product?.quantity}</span>
+                     <span className="text-red-500">{product?.stock}</span>
                   </p>
                   <p className=" text-gray-700 text-base my-5">
                      Most fresh vegetables are low in calories and have a water
@@ -78,20 +84,21 @@ const ProductModal = ({ product, setModalShow, quantity, setQuantity }) => {
                         <span className="text-xl">{quantity}</span>
                         <button
                            className={`p-3 ${
-                              quantity === product.quantity &&
+                              quantity === product.stock &&
                               " cursor-not-allowed"
                            }`}
-                           disabled={quantity === product?.quantity}
+                           disabled={quantity === product?.stock}
+                           onClick={() => setQuantity((prev) => prev + 1)}
                         >
                            <HiPlus
                               size={20}
                               className="text-black text-xl font-bold"
-                              onClick={() => setQuantity((prev) => prev + 1)}
                            ></HiPlus>
                         </button>
                      </div>
                      <div className="w-1/2">
                         <AddToCartButton
+                           onClick={() => addToCart(product._id)}
                            containerStyles={`py-[10px] font-bold`}
                         ></AddToCartButton>
                      </div>

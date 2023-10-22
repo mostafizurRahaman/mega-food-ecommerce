@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 import Banner from "../Banner/Banner";
 import { baseURL } from "../../Configs/libs";
@@ -23,8 +23,12 @@ const BannerSection = () => {
    return (
       <div className="">
          <Swiper
-            modules={[Pagination]}
+            modules={[Pagination, Autoplay]}
             slidesPerView={1}
+            autoplay={{
+               delay: 5000,
+               disableOnInteraction: false,
+            }}
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}

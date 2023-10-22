@@ -1,13 +1,77 @@
 /* eslint-disable react/prop-types */
 import ProductModal from "../ProducModal/ProductModal";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiMinus } from "react-icons/bi";
 import { HiPlus } from "react-icons/hi";
+import { CartContext } from "../../Context/CartContext";
 
 const ProductCard = ({ product }) => {
    const [productModal, setProductModal] = useState(false);
    const [quantity, setQuantity] = useState(0);
-   const user = { role: "user" };
+   const { cart, setCart } = useContext(CartContext);
+   const user = {
+      role: "user",
+   };
+
+   const IncrementQuantity = (_id) => {
+      const savedCart = JSON.parse(localStorage.getItem("cart"));
+      console.log("first", savedCart);
+      if (quantity < product.stock) {
+         setQuantity(quantity + 1);
+         const isExist = savedCart?.find((i) => i._id === _id);
+         const rest = savedCart?.filter((i) => i._id !== _id) || [];
+         console.log(isExist);
+         console.log(rest);
+         if (!isExist) {
+            setCart([...rest, { _id: _id, quantity: 1 }]);
+            localStorage.setItem(
+               "cart",
+               JSON.stringify([...rest, { _id: _id, quantity: 1 }])
+            );
+         } else {
+            setQuantity(isExist.quantity + 1);
+            setCart([
+               ...rest,
+               { _id: isExist._id, quantity: isExist.quantity + 1 },
+            ]);
+            localStorage.setItem(
+               "cart",
+               JSON.stringify([
+                  ...rest,
+                  { _id: isExist._id, quantity: isExist.quantity + 1 },
+               ])
+            );
+         }
+         console.log("last", cart);
+      }
+   };
+
+   const DecrementQuantity = (_id) => {
+      if (quantity > 0) {
+         const savedCart = JSON.parse(localStorage.getItem("cart"));
+         const isExist = savedCart?.find((i) => i._id === _id);
+         const rest = savedCart.filter((i) => i._id !== _id) || [];
+         if (isExist.quantity === 1) {
+            setQuantity(0);
+            setCart([...rest]);
+            localStorage.setItem("cart", JSON.stringify([...rest]));
+         } else {
+            setQuantity(isExist.quantity - 1);
+            const newCart = [
+               ...rest,
+               { _id: isExist._id, quantity: isExist.quantity - 1 },
+            ];
+            setCart(newCart);
+            localStorage.setItem("cart", JSON.stringify(newCart));
+         }
+      }
+   };
+
+   useEffect(() => {
+      const currentItem = cart.find((i) => i._id === product._id);
+      setQuantity(currentItem?.quantity || 0);
+   }, [product._id, cart]);
+
    return (
       <>
          <div className="bg-white hover:shadow-[5px_5px_5px_5px_#ddd] p-2 rounded-md">
@@ -21,7 +85,8 @@ const ProductCard = ({ product }) => {
                </div>
                <div className="flex items-center justify-center flex-col">
                   <p className="text-sm">
-                     {product.quantity} {product.unit}
+                     {product.stock}
+                     {product.unit}
                   </p>
                   <h3 className="text-xl">
                      <span className="font-bold mr-2  text-red-500">
@@ -50,10 +115,10 @@ const ProductCard = ({ product }) => {
                               quantity === 0 && "cursor-not-allowed"
                            }`}
                            disabled={quantity === 0}
-                           onClick={() => setQuantity((prev) => prev - 1)}
+                           onClick={() => DecrementQuantity(product._id)}
                         >
                            <BiMinus
-                              size={20}
+                              size={30}
                               className="text-secondary hover:text-red-500  "
                            ></BiMinus>
                         </button>
@@ -69,15 +134,14 @@ const ProductCard = ({ product }) => {
                         </h2>
                         <button
                            className={`p-3 ${
-                              quantity === product.quantity &&
-                              "cursor-not-allowed"
+                              quantity === product.stock && "cursor-not-allowed"
                            }`}
-                           disabled={quantity === product?.quantity}
+                           disabled={quantity === product.stock}
                         >
                            <HiPlus
-                              size={20}
-                              className="text-secondary hover:text-red-500  "
-                              onClick={() => setQuantity((prev) => prev + 1)}
+                              size={30}
+                              className="text-secondary hover:text-red-500   "
+                              onClick={() => IncrementQuantity(product._id)}
                            ></HiPlus>
                         </button>
                      </div>
@@ -91,9 +155,42 @@ const ProductCard = ({ product }) => {
                </div>
             </div>
             <div>
-               <button className="px-5 py-2 w-full rounded-md text-secondary bg-primary">
-                  Add to cart
-               </button>
+               {quantity >= 1 ? (
+                  <div className=" gap-5 rounded-md flex items-center justify-between bg-primary text-white border border-gray-400">
+                     <button
+                        className={`p-3  text-white ${
+                           quantity === 0 && " cursor-not-allowed"
+                        }`}
+                        disabled={quantity === 0}
+                        onClick={() => DecrementQuantity(product._id)}
+                     >
+                        <BiMinus
+                           size={20}
+                           className="text-white text-xl font-bold"
+                        ></BiMinus>
+                     </button>
+                     <span className="text-xl">{quantity}</span>
+                     <button
+                        className={`p-3 text-white ${
+                           quantity === product.stock && " cursor-not-allowed"
+                        }`}
+                        disabled={quantity === product?.stock}
+                        onClick={() => IncrementQuantity(product._id)}
+                     >
+                        <HiPlus
+                           size={20}
+                           className="text-white text-xl font-bold"
+                        ></HiPlus>
+                     </button>
+                  </div>
+               ) : (
+                  <button
+                     onClick={() => IncrementQuantity(product._id)}
+                     className="px-5 py-2 w-full rounded-md text-secondary bg-primary"
+                  >
+                     Add to cart
+                  </button>
+               )}
             </div>
          </div>
          {productModal && (

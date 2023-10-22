@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBarsStaggered, FaRegUser } from "react-icons/fa6";
 import { RiNotification3Line } from "react-icons/ri";
 import { TbShoppingCart } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
+import { CartContext } from "../../Context/CartContext";
 
 const Navbar2 = ({ setIsOpen }) => {
    const [user, setUser] = useState("");
+   const { cart } = useContext(CartContext);
 
    return (
       <nav
@@ -46,7 +48,7 @@ const Navbar2 = ({ setIsOpen }) => {
             <Link to="/cart" className="relative">
                <TbShoppingCart size={26}></TbShoppingCart>
                <span className="absolute -top-1 -right-2  bg-red-500 text-secondary w-5  h-5 rounded-full flex  items-center justify-center text-xs ">
-                  20
+                  {cart?.length || 0}
                </span>
             </Link>
             <Link to="/login">

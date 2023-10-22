@@ -5,6 +5,7 @@ import Home from "../../Pages/Home";
 
 import ProductPage from "../../Pages/product";
 import Category from "../../Pages/Category";
+import ProductDetails from "../../Pages/ProductDetails/ProductDetails";
 
 export const routes = createBrowserRouter([
    {
@@ -26,6 +27,10 @@ export const routes = createBrowserRouter([
          {
             path: "/category/:category/:subcategoryId",
             element: <ProductPage></ProductPage>,
+         },
+         {
+            path: "/category/:category/:subcategoryId/:productId",
+            element: <ProductDetails></ProductDetails>,
          },
       ],
    },
