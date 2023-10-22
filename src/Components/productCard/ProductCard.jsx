@@ -200,6 +200,8 @@ const ProductCard = ({ product }) => {
                setQuantity={setQuantity}
                modalShow={productModal}
                setModalShow={setProductModal}
+               IncrementQuantity={IncrementQuantity}
+               DecrementQuantity={DecrementQuantity}
             ></ProductModal>
          )}
       </>

@@ -9,8 +9,8 @@ const ProductModal = ({
    product,
    setModalShow,
    quantity,
-   setQuantity,
-   addToCart,
+   DecrementQuantity,
+   IncrementQuantity,
 }) => {
    const user = {
       role: "user",
@@ -74,7 +74,7 @@ const ProductModal = ({
                               quantity === 0 && " cursor-not-allowed"
                            }`}
                            disabled={quantity === 0}
-                           onClick={() => setQuantity((prev) => prev - 1)}
+                           onClick={() => DecrementQuantity(product._id)}
                         >
                            <BiMinus
                               size={20}
@@ -88,7 +88,7 @@ const ProductModal = ({
                               " cursor-not-allowed"
                            }`}
                            disabled={quantity === product?.stock}
-                           onClick={() => setQuantity((prev) => prev + 1)}
+                           onClick={() => IncrementQuantity(product._id)}
                         >
                            <HiPlus
                               size={20}
@@ -98,7 +98,7 @@ const ProductModal = ({
                      </div>
                      <div className="w-1/2">
                         <AddToCartButton
-                           onClick={() => addToCart(product._id)}
+                           // onClick={() => addToCart(product._id)}
                            containerStyles={`py-[10px] font-bold`}
                         ></AddToCartButton>
                      </div>
