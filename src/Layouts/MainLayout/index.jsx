@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar2 from "../../Components/Navbar";
 import Siderbar from "../../Components/Sidebar";
+import CartDrawer from "../../Components/CartDrawer/CartDrawer";
 const MainLayout = () => {
    const [isOpen, setIsOpen] = useState(true);
    return (
@@ -25,6 +26,7 @@ const MainLayout = () => {
                   <Outlet></Outlet>
                </div>
             </div>
+            <CartDrawer></CartDrawer>
          </div>
       </div>
    );

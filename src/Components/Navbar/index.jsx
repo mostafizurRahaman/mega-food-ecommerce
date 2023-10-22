@@ -10,7 +10,7 @@ import { CartContext } from "../../Context/CartContext";
 
 const Navbar2 = ({ setIsOpen }) => {
    const [user, setUser] = useState("");
-   const { cart } = useContext(CartContext);
+   const { cart, setShowCart, showCart } = useContext(CartContext);
 
    return (
       <nav
@@ -45,12 +45,12 @@ const Navbar2 = ({ setIsOpen }) => {
          <div className=" w-1/2 md:w-auto md:order-3 flex items-center justify-end gap-5 text-secondary font-bold">
             <RiNotification3Line size={25}></RiNotification3Line>
 
-            <Link to="/cart" className="relative">
+            <div className="relative" onClick={() => setShowCart(!showCart)}>
                <TbShoppingCart size={26}></TbShoppingCart>
                <span className="absolute -top-1 -right-2  bg-red-500 text-secondary w-5  h-5 rounded-full flex  items-center justify-center text-xs ">
                   {cart?.length || 0}
                </span>
-            </Link>
+            </div>
             <Link to="/login">
                <FaRegUser size={24}></FaRegUser>
             </Link>

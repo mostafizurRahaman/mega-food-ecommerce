@@ -64,7 +64,7 @@ const Banner = ({ banner }) => {
       return navigate(`/category${category?.path}${offerItem?.path}`);
    };
 
-   console.log(subCategories, "sub cate");
+   // console.log(subCategories, "sub cate");
 
    const handleProductAction = () => {
       const category = categories.find(
