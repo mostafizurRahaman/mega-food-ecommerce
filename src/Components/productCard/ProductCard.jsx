@@ -68,7 +68,7 @@ const ProductCard = ({ product }) => {
    };
 
    useEffect(() => {
-      const currentItem = cart.find((i) => i._id === product._id);
+      const currentItem = cart?.find((i) => i._id === product._id);
       setQuantity(currentItem?.quantity || 0);
    }, [product._id, cart]);
 
