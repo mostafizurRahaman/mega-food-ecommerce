@@ -74,7 +74,7 @@ const ProductModal = ({
                               quantity === 0 && " cursor-not-allowed"
                            }`}
                            disabled={quantity === 0}
-                           onClick={() => DecrementQuantity(product._id)}
+                           onClick={() => DecrementQuantity(product)}
                         >
                            <BiMinus
                               size={20}
@@ -88,7 +88,7 @@ const ProductModal = ({
                               " cursor-not-allowed"
                            }`}
                            disabled={quantity === product?.stock}
-                           onClick={() => IncrementQuantity(product._id)}
+                           onClick={() => IncrementQuantity(product)}
                         >
                            <HiPlus
                               size={20}

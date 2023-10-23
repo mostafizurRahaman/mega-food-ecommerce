@@ -7,49 +7,46 @@ import { GrFormClose } from "react-icons/gr";
 import toast from "react-hot-toast";
 // eslint-disable-next-line react/prop-types
 const CheckOutSingleItems = ({ product }) => {
-   const { cart, setCart } = useContext(CartContext);
-   const [item, setItem] = useState({});
-   const [user, setUser] = useState({ role: "user" });
-   const [quantity, setQuantity] = useState(0);
+   const { cart, setCart, total } = useContext(CartContext);
 
-   const IncrementQuantity = (_id) => {
+   const [user, setUser] = useState({ role: "user" });
+   const [currentItem, setCurrentItem] = useState({});
+   const [quantity, setQuantity] = useState(0);
+   const IncrementQuantity = (item) => {
       const savedCart = JSON.parse(localStorage.getItem("cart"));
-      console.log("first", savedCart);
+
       if (quantity < product.stock) {
-         setQuantity(quantity + 1);
-         const isExist = savedCart?.find((i) => i._id === _id);
-         const rest = savedCart?.filter((i) => i._id !== _id) || [];
-         console.log(isExist);
-         console.log(rest);
-         if (!isExist) {
-            setCart([...rest, { _id: _id, quantity: 1 }]);
-            localStorage.setItem(
-               "cart",
-               JSON.stringify([...rest, { _id: _id, quantity: 1 }])
-            );
-         } else {
-            setQuantity(isExist.quantity + 1);
-            setCart([
-               ...rest,
-               { _id: isExist._id, quantity: isExist.quantity + 1 },
-            ]);
+         const isExist = savedCart?.find((i) => i._id === item?._id);
+         const rest = savedCart?.filter((i) => i._id !== item?._id) || [];
+         if (!isExist._id) {
+            setQuantity(quantity + 1);
+            setCart([...rest, { ...item, _id: item._id, quantity: 1 }]);
+            console.log([...rest, { ...item, _id: item._id, quantity: 1 }]);
             localStorage.setItem(
                "cart",
                JSON.stringify([
                   ...rest,
-                  { _id: isExist._id, quantity: isExist.quantity + 1 },
+                  { ...item, _id: item._id, quantity: 1 },
                ])
             );
+         } else {
+            setQuantity(isExist.quantity + 1);
+            const newCart = [
+               ...rest,
+               { ...item, _id: isExist._id, quantity: isExist.quantity + 1 },
+            ];
+            setCart(newCart);
+            localStorage.setItem("cart", JSON.stringify(newCart));
          }
-         console.log("last", cart);
+         // console.log("last", cart);
       }
    };
 
-   const DecrementQuantity = (_id) => {
+   const DecrementQuantity = (item) => {
       if (quantity > 0) {
          const savedCart = JSON.parse(localStorage.getItem("cart"));
-         const isExist = savedCart?.find((i) => i._id === _id);
-         const rest = savedCart.filter((i) => i._id !== _id) || [];
+         const isExist = savedCart?.find((i) => i._id === item?._id);
+         const rest = savedCart.filter((i) => i._id !== item?._id) || [];
          if (isExist.quantity === 1) {
             setQuantity(0);
             setCart([...rest]);
@@ -58,7 +55,7 @@ const CheckOutSingleItems = ({ product }) => {
             setQuantity(isExist.quantity - 1);
             const newCart = [
                ...rest,
-               { _id: isExist._id, quantity: isExist.quantity - 1 },
+               {...item,  _id: isExist._id, quantity: isExist.quantity - 1 },
             ];
             setCart(newCart);
             localStorage.setItem("cart", JSON.stringify(newCart));
@@ -75,9 +72,9 @@ const CheckOutSingleItems = ({ product }) => {
    };
 
    useEffect(() => {
-      const currentItem = cart?.find((i) => i._id === product._id);
-      setItem(currentItem);
-      setQuantity(currentItem?.quantity);
+      const MatachedItem = cart?.find((i) => i._id === product._id);
+      setCurrentItem(MatachedItem);
+      setQuantity(MatachedItem?.quantity);
    }, [product._id, cart]);
 
    return (
@@ -88,16 +85,20 @@ const CheckOutSingleItems = ({ product }) => {
          <div className="flex flex-col gap-1 items-center justify-center px-3 h-[100px] ">
             <button
                disabled={quantity === product.stock}
-               onClick={() => IncrementQuantity(product._id)}
-               className="w-5 h-5 text-white flex items-center justify-center rounded-full bg-primary text-xl"
+               onClick={() => IncrementQuantity(product)}
+               className={`w-5 h-5 text-white flex items-center justify-center rounded-full bg-primary text-xl ${
+                  quantity === product.stock && "cursor-not-allowed"
+               }`}
             >
                <FiPlus size={20}></FiPlus>
             </button>
-            <span>{item?.quantity}</span>
+            <span>{currentItem?.quantity}</span>
             <button
                disabled={!quantity}
-               onClick={() => DecrementQuantity(product._id)}
-               className="w-5 h-5 text-white flex items-center justify-center rounded-full bg-primary text-xl"
+               onClick={() => DecrementQuantity(product)}
+               className={`w-5 h-5 text-white flex items-center justify-center rounded-full bg-primary text-xl ${
+                  quantity === 0 && "cursor-not-allowed"
+               }`}
             >
                <HiMinus size={20}></HiMinus>
             </button>
@@ -115,17 +116,17 @@ const CheckOutSingleItems = ({ product }) => {
                {user?.role === "user" ? (
                   <>
                      <p>
-                        ${product.price} x {item?.quantity}
+                        ${product.price} x {quantity}
                      </p>
                   </>
                ) : (
                   <p>
-                     ${product.price} x {item?.quantity}
+                     ${product.price} x {quantity}
                   </p>
                )}
             </div>
          </div>
-         <div className="px-3">
+         <div className="px-3 flex">
             <button onClick={() => removeFromCart(product._id)}>
                <GrFormClose></GrFormClose>
             </button>

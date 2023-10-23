@@ -7,7 +7,7 @@ import { accessToken, baseURL } from "../../Configs/libs";
 import CheckOutSingleItems from "../CheckOutSingleItems/CheckOutSingleItems";
 
 const CartDrawer = () => {
-   const { cart, show, showCart, setShowCart } = useContext(CartContext);
+   const { cart, showCart, setShowCart, total } = useContext(CartContext);
 
    const [ids, setIds] = useState([]);
    const { data: products = [], isLoading } = useQuery({
@@ -20,7 +20,7 @@ const CartDrawer = () => {
                   "content-type": "application/json",
                   authorization: accessToken,
                },
-               body: JSON.stringify({ ids: ids }),
+               body: JSON.stringify({ ids: ids, cart: cart }),
             });
             const data = await res.json();
             return data.data;
@@ -28,12 +28,14 @@ const CartDrawer = () => {
          return [];
       },
    });
-   console.log(products);
+   // console.log(products);
 
    useEffect(() => {
       const cartedIds = cart?.map((i) => i._id);
+
       setIds(cartedIds || []);
    }, [cart]);
+
    return (
       <div
          className={` ${
@@ -54,12 +56,13 @@ const CartDrawer = () => {
          <div className="flex-grow overflow-y-auto ">
             {products?.map((product) => (
                <CheckOutSingleItems
-                  key={product._id}
+                  key={product?._id}
                   product={product}
                ></CheckOutSingleItems>
             ))}
          </div>
          <div className="bg-primary  text-white p-5  round-t-3xl  flex items-center justify-between ">
+            <h3>Total: ${total} tk</h3>
             <button className="px-3 rounded-md py-2  bg-white  text-black">
                {" "}
                checkout Now

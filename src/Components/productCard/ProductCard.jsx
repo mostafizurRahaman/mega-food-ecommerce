@@ -13,44 +13,59 @@ const ProductCard = ({ product }) => {
       role: "user",
    };
 
-   const IncrementQuantity = (_id) => {
+   const IncrementQuantity = (item) => {
       const savedCart = JSON.parse(localStorage.getItem("cart"));
       console.log("first", savedCart);
       if (quantity < product.stock) {
-         setQuantity(quantity + 1);
-         const isExist = savedCart?.find((i) => i._id === _id);
-         const rest = savedCart?.filter((i) => i._id !== _id) || [];
+         const isExist = savedCart?.find((i) => i._id === item._id);
+         const rest = savedCart?.filter((i) => i._id !== item._id) || [];
          console.log(isExist);
          console.log(rest);
          if (!isExist) {
-            setCart([...rest, { _id: _id, quantity: 1 }]);
+            setQuantity(quantity + 1);
+            setCart([...rest, { _id: item._id, quantity: 1, ...item }]);
             localStorage.setItem(
                "cart",
-               JSON.stringify([...rest, { _id: _id, quantity: 1 }])
+               JSON.stringify([
+                  ...rest,
+                  {
+                     _id: item._id,
+                     quantity: 1,
+                     ...item,
+                  },
+               ])
             );
          } else {
             setQuantity(isExist.quantity + 1);
             setCart([
                ...rest,
-               { _id: isExist._id, quantity: isExist.quantity + 1 },
+               {
+                  _id: isExist._id,
+                  quantity: isExist.quantity + 1,
+                  ...item,
+               },
             ]);
             localStorage.setItem(
                "cart",
                JSON.stringify([
                   ...rest,
-                  { _id: isExist._id, quantity: isExist.quantity + 1 },
+                  {
+                     _id: isExist._id,
+                     quantity: isExist.quantity + 1,
+                     ...item,
+                  },
                ])
             );
          }
-         console.log("last", cart);
+         // console.log("last", cart);
       }
    };
 
-   const DecrementQuantity = (_id) => {
+   const DecrementQuantity = (item) => {
       if (quantity > 0) {
          const savedCart = JSON.parse(localStorage.getItem("cart"));
-         const isExist = savedCart?.find((i) => i._id === _id);
-         const rest = savedCart.filter((i) => i._id !== _id) || [];
+         const isExist = savedCart?.find((i) => i._id === item._id);
+         const rest = savedCart.filter((i) => i._id !== item._id) || [];
          if (isExist.quantity === 1) {
             setQuantity(0);
             setCart([...rest]);
@@ -59,7 +74,11 @@ const ProductCard = ({ product }) => {
             setQuantity(isExist.quantity - 1);
             const newCart = [
                ...rest,
-               { _id: isExist._id, quantity: isExist.quantity - 1 },
+               {
+                  _id: isExist._id,
+                  quantity: isExist.quantity - 1,
+                  ...item,
+               },
             ];
             setCart(newCart);
             localStorage.setItem("cart", JSON.stringify(newCart));
@@ -115,7 +134,7 @@ const ProductCard = ({ product }) => {
                               quantity === 0 && "cursor-not-allowed"
                            }`}
                            disabled={quantity === 0}
-                           onClick={() => DecrementQuantity(product._id)}
+                           onClick={() => DecrementQuantity(product)}
                         >
                            <BiMinus
                               size={30}
@@ -141,7 +160,7 @@ const ProductCard = ({ product }) => {
                            <HiPlus
                               size={30}
                               className="text-secondary hover:text-red-500   "
-                              onClick={() => IncrementQuantity(product._id)}
+                              onClick={() => IncrementQuantity(product)}
                            ></HiPlus>
                         </button>
                      </div>
@@ -162,7 +181,7 @@ const ProductCard = ({ product }) => {
                            quantity === 0 && " cursor-not-allowed"
                         }`}
                         disabled={quantity === 0}
-                        onClick={() => DecrementQuantity(product._id)}
+                        onClick={() => DecrementQuantity(product)}
                      >
                         <BiMinus
                            size={20}
@@ -175,7 +194,7 @@ const ProductCard = ({ product }) => {
                            quantity === product.stock && " cursor-not-allowed"
                         }`}
                         disabled={quantity === product?.stock}
-                        onClick={() => IncrementQuantity(product._id)}
+                        onClick={() => IncrementQuantity(product)}
                      >
                         <HiPlus
                            size={20}
@@ -185,7 +204,7 @@ const ProductCard = ({ product }) => {
                   </div>
                ) : (
                   <button
-                     onClick={() => IncrementQuantity(product._id)}
+                     onClick={() => IncrementQuantity(product)}
                      className="px-5 py-2 w-full rounded-md text-secondary bg-primary"
                   >
                      Add to cart
