@@ -8,6 +8,9 @@ import Category from "../../Pages/Category";
 import ProductDetails from "../../Pages/ProductDetails/ProductDetails";
 import SignUp from "../../Pages/register/register";
 import SignIn from "../../Pages/Login";
+import SideBarLayout from "../../Layouts/SidebarLayout";
+import DashboardLayout from "../../Layouts/DashbordLayout/DashboardLayout";
+import Dashboard from "../../Pages/Dashboard/Dashboard";
 
 export const routes = createBrowserRouter([
    {
@@ -16,31 +19,47 @@ export const routes = createBrowserRouter([
       children: [
          {
             path: "/",
-            element: <Home />,
+            element: <SideBarLayout></SideBarLayout>,
+            children: [
+               {
+                  path: "/",
+                  element: <Home />,
+               },
+               {
+                  path: "/",
+                  element: <Home />,
+               },
+               {
+                  path: "/category/:categoryId",
+                  element: <Category></Category>,
+               },
+               {
+                  path: "/category/:category/:subcategoryId",
+                  element: <ProductPage></ProductPage>,
+               },
+               {
+                  path: "/category/:category/:subcategoryId/:productId",
+                  element: <ProductDetails></ProductDetails>,
+               },
+               {
+                  path: "/sign-up",
+                  element: <SignUp></SignUp>,
+               },
+               {
+                  path: "/sign-in",
+                  element: <SignIn></SignIn>,
+               },
+            ],
          },
          {
-            path: "/",
-            element: <Home />,
-         },
-         {
-            path: "/category/:categoryId",
-            element: <Category></Category>,
-         },
-         {
-            path: "/category/:category/:subcategoryId",
-            element: <ProductPage></ProductPage>,
-         },
-         {
-            path: "/category/:category/:subcategoryId/:productId",
-            element: <ProductDetails></ProductDetails>,
-         },
-         {
-            path: "/sign-up",
-            element: <SignUp></SignUp>,
-         },
-         {
-            path: "/sign-in",
-            element: <SignIn></SignIn>,
+            path: "/dashboard",
+            element: <DashboardLayout></DashboardLayout>,
+            children: [
+               {
+                  path: "/dashboard/",
+                  element: <Dashboard></Dashboard>,
+               },
+            ],
          },
       ],
    },

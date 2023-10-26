@@ -5,6 +5,7 @@ import { baseURL } from "../../Configs/libs";
 import toast from "react-hot-toast";
 import SubmitButton from "../../Components/Buttons/SubmitButton";
 import { Link } from "react-router-dom";
+import Loading from "../../Components/Loading";
 
 const SignUp = () => {
    const [formData, setFormData] = useState({
@@ -358,6 +359,7 @@ const SignUp = () => {
                      </div>
                   </div>
                </div>
+               {loading && <Loading></Loading>}
             </form>
          </div>
          {/* <div className=" md:w-1/2 flex items-center justify-center">

@@ -4,8 +4,9 @@ import ImageUpload from "../../Components/ImageUpload";
 import { baseURL } from "../../Configs/libs";
 import toast from "react-hot-toast";
 import SubmitButton from "../../Components/Buttons/SubmitButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import Loading from "../../Components/Loading";
 
 const SignIn = () => {
    const [formData, setFormData] = useState({
@@ -18,6 +19,9 @@ const SignIn = () => {
    });
    const { setUser } = useContext(AuthContext);
    const [loading, setLoading] = useState(false);
+   const navigate = useNavigate();
+   const location = useLocation();
+   const from = location?.state?.from?.pathname || "/dashboard";
 
    const handleEmail = (e) => {
       const name = e?.target?.name;
@@ -91,9 +95,10 @@ const SignIn = () => {
 
          const data = await res.json();
          if (data?.status === "success") {
-            setUser(data.data.user);
+            setUser(data.data);
             toast.success(data.message);
             setLoading(false);
+            navigate(from, { replace: true });
             localStorage.setItem("accessToken", data.data.accessToken);
          } else {
             toast.error(data.message);
@@ -158,6 +163,7 @@ const SignIn = () => {
                      </div>
                   </div>
                </div>
+               {loading && <Loading></Loading>}
             </form>
          </div>
          {/* <div className=" md:w-1/2 flex items-center justify-center">

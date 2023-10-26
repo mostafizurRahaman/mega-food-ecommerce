@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
       return <Loading></Loading>;
    }
 
-   if (user?.email) {
+   if (user?.email && user?.status === "active") {
       return children;
    }
 

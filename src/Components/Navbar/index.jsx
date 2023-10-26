@@ -7,9 +7,12 @@ import { RiNotification3Line } from "react-icons/ri";
 import { TbShoppingCart } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 import { CartContext } from "../../Context/CartContext";
+import { FiLogOut } from "react-icons/fi";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import ProfileCard from "../ProfileCard/ProfileCard";
 
 const Navbar2 = ({ setIsOpen }) => {
-   const [user, setUser] = useState("");
+   const { user, logOut } = useContext(AuthContext);
    const { cart, setShowCart, showCart } = useContext(CartContext);
 
    return (
@@ -43,17 +46,29 @@ const Navbar2 = ({ setIsOpen }) => {
             ></IoMdSearch>
          </div>
          <div className=" w-1/2 md:w-auto md:order-3 flex items-center justify-end gap-5 text-secondary font-bold">
-            <RiNotification3Line size={25}></RiNotification3Line>
-
             <div className="relative" onClick={() => setShowCart(!showCart)}>
                <TbShoppingCart size={26}></TbShoppingCart>
                <span className="absolute -top-1 -right-2  bg-red-500 text-secondary w-5  h-5 rounded-full flex  items-center justify-center text-xs ">
                   {cart?.length || 0}
                </span>
             </div>
-            <Link to="/sign-in">
-               <FaRegUser size={24}></FaRegUser>
-            </Link>
+            {user?.email ? (
+               <>
+                  <div className="group relative">
+                     <img
+                        src={user?.image}
+                        alt=""
+                        className="w-12 h-12 border-2   rounded-full  border-white"
+                     />
+                     <ProfileCard></ProfileCard>
+                  </div>
+                  <RiNotification3Line size={25}></RiNotification3Line>
+               </>
+            ) : (
+               <Link to="/sign-in">
+                  <FaRegUser size={24}></FaRegUser>
+               </Link>
+            )}
          </div>
       </nav>
    );
