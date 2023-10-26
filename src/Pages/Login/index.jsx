@@ -1,143 +1,170 @@
-import { Link } from "react-router-dom";
-import logo from "../../assets/eskooly.png";
-import { GoQuestion } from "react-icons/go";
-import { BiUser } from "react-icons/bi";
-import { FaUsersGear, FaUserTie } from "react-icons/fa6";
-import { PiStudentFill } from "react-icons/pi";
-import { RiLockPasswordFill } from "react-icons/ri";
-import UserType from "../../Components/UserType/UserType";
-import { useState } from "react";
-
-import InputBox from "../../Components/Inputs/InputBox";
+import { useContext, useState } from "react";
+import InputText from "../../Components/Inputs/InputText";
+import ImageUpload from "../../Components/ImageUpload";
+import { baseURL } from "../../Configs/libs";
+import toast from "react-hot-toast";
 import SubmitButton from "../../Components/Buttons/SubmitButton";
-const Login = () => {
-   const [FormData, setFormData] = useState({
-      username: "",
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+
+const SignIn = () => {
+   const [formData, setFormData] = useState({
       email: "",
-      userType: "admin",
+      password: "",
    });
    const [errors, setErrors] = useState({
-      username: "",
       email: "",
-      general: "",
+      password: "",
    });
-   const handleEvent = (e) => {
-      const name = e.target.name;
-      const value = e.target.value;
-      return { name, value };
-   };
-   const handleUserName = (e) => {
-      const { name, value } = handleEvent(e);
-      if (value.length <= 0) {
-         setErrors({ ...errors, [name]: `${name} shouldn't be empty` });
-         setFormData({ ...FormData, [name]: "" });
-      } else if (!/^(?!.*[_.]{2,})[a-zA-Z0-9._-]+$/.test(value)) {
-         setErrors({ ...errors, [name]: `enter a valid ${name}` });
-         setFormData({ ...FormData, [name]: "" });
+   const { setUser } = useContext(AuthContext);
+   const [loading, setLoading] = useState(false);
+
+   const handleEmail = (e) => {
+      const name = e?.target?.name;
+      const value = e.target.value.trim();
+      if (!value.length) {
+         setErrors({ ...errors, [name]: "email shouldn't be empty" });
+         setFormData({ ...formData, [name]: "" });
+      } else if (
+         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+      ) {
+         setErrors({ ...errors, [name]: "Please provide a email" });
+         setFormData({ ...formData, [name]: "" });
       } else {
          setErrors({ ...errors, [name]: "" });
-         setFormData({ ...FormData, [name]: value });
+         setFormData({ ...formData, [name]: value });
       }
    };
 
    const handlePassword = (e) => {
-      const { name, value } = handleEvent(e);
+      const name = e.target.name;
+      const value = e.target.value;
       if (value.length <= 0) {
          setErrors({ ...errors, [name]: "password shouldn'b be empty  " });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else if (!/[A-Z]/.test(value)) {
          setErrors({ ...errors, [name]: "must have a  capital letter " });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else if (!/[a-z]/.test(value)) {
          setErrors({ ...errors, [name]: "must  have a small letter " });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else if (!/[0-9]/.test(value)) {
          setErrors({ ...errors, [name]: "must  have a digit" });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~]/.test(value)) {
          setErrors({ ...errors, [name]: "must  have a special character" });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else if (value.length <= 8) {
          setErrors({
             ...errors,
             [name]: "password must be 8 character or more",
          });
-         setFormData({ ...FormData, [name]: "" });
+         setFormData({ ...formData, [name]: "" });
       } else {
-         setErrors({ ...errors, [name]: "" });
-         setFormData({ ...FormData, [name]: value });
+         if (formData.confirm) {
+            if (formData.password === formData.confirm) {
+               setErrors({ ...errors, [name]: "Password not matched" });
+               setFormData({ ...formData, [name]: "" });
+            } else {
+               setErrors({ ...errors, [name]: "" });
+               setFormData({ ...formData, [name]: value });
+            }
+         } else {
+            setErrors({ ...errors, [name]: "" });
+            setFormData({ ...formData, [name]: value });
+         }
       }
    };
-   console.log(FormData);
 
+   const onSubmit = async (e) => {
+      e.preventDefault();
+
+      setLoading(true);
+      try {
+         const res = await fetch(`${baseURL}/user/login`, {
+            method: "POST",
+            headers: {
+               "content-type": "application/json",
+            },
+            body: JSON.stringify(formData),
+         });
+
+         const data = await res.json();
+         if (data?.status === "success") {
+            setUser(data.data.user);
+            toast.success(data.message);
+            setLoading(false);
+            localStorage.setItem("accessToken", data.data.accessToken);
+         } else {
+            toast.error(data.message);
+            setLoading(false);
+         }
+      } catch (err) {
+         toast.error(err?.message);
+         console.log(err);
+         setLoading(false);
+      }
+   };
+
+   console.log(formData);
    return (
-      <main className="flex items-center jsutify-center">
-         <div className="w-1/2 flex h-screen items-center justify-center">
-            <div className="w-[350px] rounded-lg  py-5  flex flex-col gap-3 items-center justify-center">
-               <img
-                  src={logo}
-                  className="w-[150px] h-auto "
-                  alt="school_management_system_logo"
-               />
-               <Link
-                  href="/register"
-                  className="flex items-center justify-center text-lg font-bold gap-1 "
-               >
-                  <GoQuestion></GoQuestion>I do not have an account
-               </Link>
-               <p className="text-lg text-gray-500 font-bold">I am</p>
-               <div className="flex  text-gray-500 items-center justify-center gap-4">
-                  <UserType
-                     text="admin"
-                     icon={<BiUser></BiUser>}
-                     type={FormData.userType}
-                     setUser={setFormData}
-                     user={FormData}
-                  ></UserType>
-                  <UserType
-                     text="employee"
-                     icon={<FaUsersGear></FaUsersGear>}
-                     type={FormData.userType}
-                     setUser={setFormData}
-                     user={FormData}
-                  ></UserType>
-                  <UserType
-                     text="students"
-                     icon={<PiStudentFill></PiStudentFill>}
-                     type={FormData.userType}
-                     setUser={setFormData}
-                     user={FormData}
-                  ></UserType>
-               </div>
-               <div className="   w-full px-2 flex flex-col gap-5 mt-5">
-                  <InputBox
-                     type="text"
-                     name="username"
-                     placeholder="Enter your user name"
-                     onChange={handleUserName}
-                     error={errors.username}
-                     icon={<FaUserTie></FaUserTie>}
-                  ></InputBox>
-                  <InputBox
+      <div className="flex items-center w-full gap-5 md:min-h-screen">
+         <div className=" w-full px-10 text-white ">
+            <form
+               onSubmit={onSubmit}
+               className="w-[50%] mx-auto bg-primary py-5  px-5 rounded "
+            >
+               <h2 className="text-3xl font-semibold capitalize mb-5 ">
+                  Sign In
+               </h2>
+               <div className="grid grid-cols-1 gap-3">
+                  <InputText
+                     type="email"
+                     name="email"
+                     label="your email"
+                     placeholder="enter your email"
+                     onChange={handleEmail}
+                     error={errors.email}
+                     styles={``}
+                  ></InputText>
+
+                  <InputText
                      type="password"
                      name="password"
-                     placeholder="Enter your password"
+                     label="your password"
+                     placeholder="enter your password"
                      onChange={handlePassword}
                      error={errors.password}
-                     icon={<RiLockPasswordFill></RiLockPasswordFill>}
-                  ></InputBox>
-                  <SubmitButton
-                     className="text-white bg-blue-500"
-                     disabled={!FormData?.username || !FormData?.password}
-                  >
-                     Login{" "}
-                  </SubmitButton>
+                     styles={``}
+                  ></InputText>
+
+                  <div className="">
+                     <SubmitButton
+                        className="bg-white text-black "
+                        disabled={!formData?.email || !formData?.password}
+                     >
+                        Sign In
+                     </SubmitButton>
+                     <div>
+                        <p>
+                           Have no account please{" "}
+                           <Link
+                              to="/sign-up"
+                              className="text-sm text-blue-500"
+                           >
+                              sign up
+                           </Link>
+                        </p>
+                     </div>
+                  </div>
                </div>
-            </div>
+            </form>
          </div>
-         <div className="w-1/2 h-screen bg-blue-400"></div>
-      </main>
+         {/* <div className=" md:w-1/2 flex items-center justify-center">
+            <img src={banner} alt="" className="object-contain w-[80%]" />
+         </div> */}
+      </div>
    );
 };
 
-export default Login;
+export default SignIn;

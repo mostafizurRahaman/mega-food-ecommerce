@@ -7,7 +7,8 @@ import { accessToken, baseURL } from "../../Configs/libs";
 import CheckOutSingleItems from "../CheckOutSingleItems/CheckOutSingleItems";
 
 const CartDrawer = () => {
-   const { cart, showCart, setShowCart, total } = useContext(CartContext);
+   const { cart, showCart, setShowCart } = useContext(CartContext);
+   const [total, setTotal] = useState(0);
 
    const [ids, setIds] = useState([]);
    const { data: products = [], isLoading } = useQuery({
@@ -32,6 +33,11 @@ const CartDrawer = () => {
 
    useEffect(() => {
       const cartedIds = cart?.map((i) => i._id);
+      const sum = cart?.reduce((a, b) => {
+         console.log(a, b);
+         return a + b.price * b.quantity;
+      }, 0);
+      setTotal(sum);
 
       setIds(cartedIds || []);
    }, [cart]);

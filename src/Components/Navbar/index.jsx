@@ -51,7 +51,7 @@ const Navbar2 = ({ setIsOpen }) => {
                   {cart?.length || 0}
                </span>
             </div>
-            <Link to="/login">
+            <Link to="/sign-in">
                <FaRegUser size={24}></FaRegUser>
             </Link>
          </div>

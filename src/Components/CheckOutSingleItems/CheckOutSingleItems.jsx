@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
-import { FiPlus, FiShoppingBag } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { HiMinus } from "react-icons/hi";
 import { GrFormClose } from "react-icons/gr";
 import toast from "react-hot-toast";
