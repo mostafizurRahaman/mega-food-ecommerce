@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../../Pages/Login";
 import MainLayout from "../../Layouts/MainLayout";
 import Home from "../../Pages/Home";
-
 import ProductPage from "../../Pages/product";
 import Category from "../../Pages/Category";
 import ProductDetails from "../../Pages/ProductDetails/ProductDetails";
@@ -10,7 +9,7 @@ import SignUp from "../../Pages/register/register";
 import SignIn from "../../Pages/Login";
 import SideBarLayout from "../../Layouts/SidebarLayout";
 import DashboardLayout from "../../Layouts/DashbordLayout/DashboardLayout";
-import Dashboard from "../../Pages/Dashboard/Dashboard";
+import Profile from "../../Pages/Profile/Profile";
 
 export const routes = createBrowserRouter([
    {
@@ -57,7 +56,7 @@ export const routes = createBrowserRouter([
             children: [
                {
                   path: "/dashboard/",
-                  element: <Dashboard></Dashboard>,
+                  element: <Profile></Profile>,
                },
             ],
          },

@@ -1,7 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-const InputSelection = ({ label, data, setData, field, options, selectOp }) => {
+const InputSelection = ({
+   label,
+   data,
+   setData,
+   field,
+   options,
+   selectOp,
+   containerStyles,
+}) => {
    const [selected, setSelected] = useState("");
 
    const handleSelecdtion = (e) => {
@@ -22,7 +30,7 @@ const InputSelection = ({ label, data, setData, field, options, selectOp }) => {
             {label}
          </label>
          <select
-            className="w-full rounded-md border  border-black  -mb-1 p-2  text-black placeholder:text-black font-normal text-sm"
+            className={` ${containerStyles} w-full rounded-md border  border-black  -mb-1 p-2  text-black placeholder:text-black font-normal text-sm `}
             onChange={handleSelecdtion}
             name={field}
          >

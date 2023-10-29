@@ -25,7 +25,7 @@ const InputText = ({
                placeholder={placeholder}
                onChange={onChange}
                value={initialValue}
-               className={`text-sm placeholder:text-gray-700 border-[1.5px]  border-gray-800 outline-none w-full text-black h-full placeholder:capitalize  py-2 pl-1 gap-2  rounded-md  ${styles}`}
+               className={` ${styles} text-sm placeholder:text-gray-700 border-[1.5px]  border-gray-800 outline-none w-full text-black h-full placeholder:capitalize  py-2 pl-1 gap-2  rounded-md `}
             />
          </div>
          {error && <ErrorMessage message={error}></ErrorMessage>}
